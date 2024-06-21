@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="title" content="Simultaneous Equation Cannons - Calculator">
+    <meta name="description" content="Calculate all possible combinations of extra deck monsters to activate the Yu-Gi-Oh! trap card Simultaneous Equation Cannons for a given game state.">
+    <meta name="keywords" content="yugioh, Yu-Gi-Oh!, Simultaneous Equation Cannons, calculator">
+    <meta name="author" content="pivotiiii">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="deps/picocss/css/pico.pink.min.css">
+    <link rel="stylesheet" href="deps/fontello/css/fontello.css">
+
+    <title>Simultaneous Equation Cannons - Calculator</title>
+    <script type="text/javascript" src="js/sec_calculator.js"></script>
+</head>
+
+<body>
+    <main class="container" style="min-height: 100vh;">
+        <script id="replace_with_navbar" src="js/load_navbar.js"></script>
+
+        <div>
+            <h1>Simultaneous Equation Cannons - Calculator</h1>
+        </div>
+        
+        <article>
+            <div>
+                <input 
+                    type="text" 
+                    name="total_cards" 
+                    id="total_cards" 
+                    placeholder="Total cards on board and in hand."
+                    autocomplete="off"
+                    aria-describedby="total_cards_helper"
+                    aria-invalid="false"
+                    oninput="validate_total_cards()"
+                />
+                <small id="total_cards_helper">Total cards on board and in hand.</small>
+            </div>
+
+            <div>
+                <input 
+                    type="text" 
+                    name="monster_levels" 
+                    id="monster_levels"
+                    placeholder="Levels/Ranks of opponents monsters (comma seperated)."
+                    autocomplete="off"
+                    aria-describedby="monster_levels_helper"
+                    aria-invalid="false"
+                    oninput="validate_monster_levels()"
+                />
+                <small id="monster_levels_helper">Levels/Ranks of opponents monsters.</small>
+            </div>
+
+            <input
+                type="button"
+                id="calc_button"
+                value="Calculate"
+                onclick="create_table()"
+            />
+
+            <div style="display: flex;">
+                <div>
+                    <label>
+                        <input 
+                            name="show_total"
+                            id="show_total"
+                            type="checkbox"
+                            role="switch"
+                            onclick="toggle_relative_totals()"
+                        />
+                    Show relative values
+                </label></div>
+            <div style="margin-left: auto; margin-right: 0;">
+                <a href="#" onclick="document.getElementById('card_text_dialog').show()">View card text</a>
+            </div>
+        </article>
+
+        <dialog id="card_text_dialog">
+            <article>
+                <h2>Simultaneous Equation Cannons</h2>
+                <img 
+                    src="https://api.cardcluster.com/storage/cards/LEDE/LEDE-EN080-664a92f0af.jpg" 
+                    alt="card image"
+                    
+                    style="border-radius: 2%; display: block; margin-left: auto; margin-right: auto; margin-bottom: 100; width: 45%;"/>
+                <p style="margin-top: 3%;">
+                    Banish 1 Fusion Monster and 2 Xyz Monsters with the same Rank from your Extra Deck, 
+                    whose combined Level and Ranks equal the total number of cards in both players' 
+                    hands and on the field, then you can apply this effect.
+                    <br>
+                    ● Return 2 of your banished monsters to the Extra Deck (1 Xyz and 1 Fusion) whose 
+                    combined Level and Rank equal the Level or Rank of 1 face-up monster your opponent 
+                    controls, then banish all cards they control.
+                </p>
+                <footer>
+                    <a 
+                        role="button" 
+                        class="secondary"
+                        href="https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=19921&request_locale=en">
+                        View on Yu-Gi-Oh! Card Database
+                    </a>
+                    <a 
+                        role="button"
+                        onclick="document.getElementById('card_text_dialog').close()">
+                        Close
+                    </a>
+                </footer>
+            </article>
+        </dialog>
+
+        <article id="table_card" style="display:none">
+            <table id="table" class="striped">
+                <thead>
+                    <tr>
+                        <th scope="col" style="text-align: center;">Total Cards</th>
+                        <th scope="col" style="text-align: center;">XYZ Rank</th>
+                        <th scope="col" style="text-align: center;">Fusion Level</th>
+                        <th scope="col" style="text-align: center;">Target Level</th>
+                    </tr>
+                </thead>
+                <tbody id="body_valid" style="display:none">
+                </tbody>
+                <thead id="sep" style="display:none">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="body_potential" style="display:none">
+                </tbody>
+            </table>
+        </article>
+        <!---<div style="position: sticky; top: 100vh;">
+            <small style="display: block; text-align: center;">
+                <small>
+                    <hr />
+                    Built by pivotiiii © 2024 using <a href="https://picocss.com" class="secondary">Pico CSS</a>
+                </small>
+            </small>
+        </div>--->
+        <script id="replace_with_footer" src="js/load_footer.js"></script>
+    </main>
+    <script type="text/javascript" src="js/projects.js"></script>
+</body>
+
+</html>
