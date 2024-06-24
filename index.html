@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="/deps/picocss/css/pico.pink.min.css">
-    <link rel="stylesheet" href="/deps/fontello/css/fontello.css">
+    <link rel="stylesheet" href="/css/overwrites.css">
 
     <title>Simultaneous Equation Cannons - Calculator</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.png">
@@ -20,7 +20,12 @@
 
 <body>
     <main class="container" style="min-height: 100vh;">
-        <script id="replace_with_navbar" src="/js/load_navbar.js"></script>
+        <div 
+            class="replace" 
+            data-file="/navbar.html" 
+            data-script="/js/populate_dropdown.js" 
+            style="min-height: 95px;">
+        </div>
 
         <div>
             <h1>Simultaneous Equation Cannons - Calculator</h1>
@@ -35,8 +40,6 @@
                     placeholder="Total cards on board and in hand."
                     autocomplete="off"
                     aria-describedby="total_cards_helper"
-                    aria-invalid="false"
-                    oninput="validate_total_cards()"
                 />
                 <small id="total_cards_helper">Total cards on board and in hand.</small>
             </div>
@@ -46,11 +49,9 @@
                     type="text" 
                     name="monster_levels" 
                     id="monster_levels"
-                    placeholder="Levels/Ranks of opponents monsters (comma seperated)."
+                    placeholder="Levels/Ranks of opponents monsters (comma separated)."
                     autocomplete="off"
                     aria-describedby="monster_levels_helper"
-                    aria-invalid="false"
-                    oninput="validate_monster_levels()"
                 />
                 <small id="monster_levels_helper">Levels/Ranks of opponents monsters.</small>
             </div>
@@ -59,7 +60,6 @@
                 type="button"
                 id="calc_button"
                 value="Calculate"
-                onclick="create_table()"
             />
 
             <div style="display: flex;">
@@ -70,12 +70,11 @@
                             id="show_total"
                             type="checkbox"
                             role="switch"
-                            onclick="toggle_relative_totals()"
                         />
                     Show relative values
                 </label></div>
             <div style="margin-left: auto; margin-right: 0;">
-                <a href="#" onclick="document.getElementById('card_text_dialog').show()">View card text</a>
+                <a id="link_show_text" href="#" onclick="document.getElementById('card_text_dialog').show()">View card text</a>
             </div>
         </article>
 
@@ -85,7 +84,6 @@
                 <img 
                     src="https://api.cardcluster.com/storage/cards/LEDE/LEDE-EN080-664a92f0af.jpg" 
                     alt="card image"
-                    
                     style="border-radius: 2%; display: block; margin-left: auto; margin-right: auto; margin-bottom: 100; width: 45%;"/>
                 <p style="margin-top: 3%;">
                     Banish 1 Fusion Monster and 2 Xyz Monsters with the same Rank from your Extra Deck, 
@@ -136,8 +134,13 @@
                 </tbody>
             </table>
         </article>
-        <script id="replace_with_footer" src="/js/load_footer.js"></script>
+        <div 
+            class="replace" 
+            data-file="/footer.html" 
+            data-style="position: sticky; top: 100vh">
+        </div>
     </main>
+    <script type="text/javascript" src="/js/load_html.js"></script>
     <script type="text/javascript" src="js/sec_calculator.js"></script>
 </body>
 

@@ -1,9 +1,13 @@
 window.onload = function() {
+    document.getElementById("total_cards").addEventListener("input", validate_total_cards);
+
     document.getElementById("total_cards").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             document.getElementById("calc_button").click();
         };
     });
+
+    document.getElementById("monster_levels").addEventListener("input", validate_monster_levels);
 
     document.getElementById("monster_levels").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
@@ -11,8 +15,15 @@ window.onload = function() {
         };
     });
 
-    const show_relative_totals = getCookie("show_relative_totals");
-    if (show_relative_totals === "true") {
+    document.getElementById("calc_button").addEventListener("click", function() {
+        validate_total_cards();
+        validate_monster_levels();
+        create_table();
+    });
+
+    document.getElementById("show_total").addEventListener("click", toggle_relative_totals);
+
+    if (localStorage.getItem("show_relative_totals")) {
         document.getElementById("show_total").checked = true;
     }
 }
@@ -20,7 +31,7 @@ window.onload = function() {
 function validate_total_cards() {
     document.getElementById("total_cards").value = document.getElementById("total_cards").value.replace(/\D/g,'');
     let val = document.getElementById("total_cards").value;
-    if (val < 2 || val > 142){
+    if (val < 2 || val > 142 || toString(val).length === 0){
         document.getElementById("total_cards").ariaInvalid = true;
         document.getElementById("total_cards_helper").innerHTML = "Must be a number between 2 and 142.";
     } else {
@@ -32,6 +43,9 @@ function validate_total_cards() {
 function validate_monster_levels() {
     document.getElementById("monster_levels").value = document.getElementById("monster_levels").value.replace(/(?!,)\D/g,'');
     let vals = document.getElementById("monster_levels").value.split(",").filter(Boolean);
+    if (vals.length === 0) {
+        document.getElementById("monster_levels").ariaInvalid = true;
+    }
     for (const val of vals) {
         if (val < 1){
             document.getElementById("monster_levels").ariaInvalid = true;
@@ -149,14 +163,6 @@ function create_table() {
 
 function toggle_relative_totals() {
     const show_relative_totals = document.getElementById("show_total").checked;
-
-    let cdate = new Date;
-    cdate.setFullYear(cdate.getFullYear() + 1);
-    document.cookie = "show_relative_totals=" + show_relative_totals.toString() + "; expires=" + cdate.toUTCString() + ";";
-
+    localStorage.setItem("show_relative_totals", show_relative_totals);
     create_table();
 }
-
-function getCookie(name) {
-    var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
-    return match ? match[1] : null; };
