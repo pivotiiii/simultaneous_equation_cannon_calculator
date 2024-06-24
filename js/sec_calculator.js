@@ -1,4 +1,4 @@
-window.onload = function() {
+window.addEventListener('load', function() {
     document.getElementById("total_cards").addEventListener("input", validate_total_cards);
 
     document.getElementById("total_cards").addEventListener("keydown", function(event) {
@@ -26,7 +26,7 @@ window.onload = function() {
     if (localStorage.getItem("show_relative_totals")) {
         document.getElementById("show_total").checked = true;
     }
-}
+});
 
 function validate_total_cards() {
     document.getElementById("total_cards").value = document.getElementById("total_cards").value.replace(/\D/g,'');
