@@ -87,7 +87,39 @@ function get_combination(level, total_cards) {
     return {xyz: 0, fusion: 0, target: 0, total_cards: 0};
 }
 
+function displayTable(amountValidCombinations, amountPotentialCombinations) {
+    const tableCard = document.getElementById("table_card");
+    const table = document.getElementById("table");
+    const bodyV = document.getElementById("body_valid");
+    const bodyP = document.getElementById("body_potential");
+    const sep = document.getElementById("sep");
+    const msg = document.getElementById("no_combinations_message");
 
+    tableCard.style.setProperty("display", "none");
+    table.style.setProperty("display", "none");
+    bodyV.style.setProperty("display", "none");
+    bodyP.style.setProperty("display", "none");
+    sep.style.setProperty("display", "none");
+    msg.style.setProperty("display", "none");
+
+    if (amountValidCombinations === 0 && amountPotentialCombinations === 0) {
+        tableCard.style.removeProperty("display");
+        msg.style.removeProperty("display");
+
+    } else {
+        if (amountValidCombinations > 0) {
+            bodyV.style.removeProperty("display");
+        }
+        if (amountPotentialCombinations > 0) {
+            bodyP.style.removeProperty("display");
+        }
+        if (amountValidCombinations > 0 && amountPotentialCombinations > 0) {
+            sep.style.removeProperty("display");
+        }
+        table.style.removeProperty("display");
+        tableCard.style.removeProperty("display");
+    }    
+}
 
 function create_table() {
     if (document.getElementById("total_cards").ariaInvalid === "true" || document.getElementById("monster_levels").ariaInvalid === "true") {
@@ -103,11 +135,10 @@ function create_table() {
 
     let bodies = new Array(body_v, body_p);
     let combinations = get_all_combinations();
-
-    if (combinations[0].length > 0 || true) {
+    if (combinations[1].length > 0) {
         let total = document.getElementById("total_cards").value;
         for (let c = 0; c < combinations[1].length; c++) {
-            combinations[1][c].total_cards = combinations[1][c].total_cards - total;//combinations[0][0].total_cards;
+            combinations[1][c].total_cards = combinations[1][c].total_cards - total;
         }
         combinations[1].sort(function(left, right) {
             let total_order_abs = Math.abs(left.total_cards) - Math.abs(right.total_cards);
@@ -117,7 +148,7 @@ function create_table() {
         });
         if (show_relative_totals === false) {
             for (let c = 0; c < combinations[1].length; c++) {
-                combinations[1][c].total_cards = parseInt(combinations[1][c].total_cards) + parseInt(total);//parseInt(combinations[0][0].total_cards);
+                combinations[1][c].total_cards = parseInt(combinations[1][c].total_cards) + parseInt(total);
             }
         }
     }
@@ -131,7 +162,6 @@ function create_table() {
             } else {
                 td1.innerHTML = combinations[i][j].total_cards;
             }
-            //td1.innerHTML = td1.innerHTML + " (" + (parseInt(combinations[0][0].total_cards) + parseInt(combinations[i][j].total_cards)).toString() + ")"
 
             const td2 = tr.insertCell();
             td2.innerHTML = combinations[i][j].xyz;
@@ -146,19 +176,7 @@ function create_table() {
         }
     }
 
-    if (combinations[0].length > 0) {
-        body_v.style.removeProperty("display");
-        table.style.removeProperty("display");
-    }
-    if (combinations[1].length > 0) {
-        body_p.style.removeProperty("display");
-        table.style.removeProperty("display");
-    }
-    if (combinations[0].length > 0 && combinations[1].length > 0) {
-        document.getElementById("sep").style.removeProperty("display");
-        table.style.removeProperty("display");
-    }
-    
+    displayTable(combinations[0].length, combinations[1].length)
 }
 
 function toggle_relative_totals() {
