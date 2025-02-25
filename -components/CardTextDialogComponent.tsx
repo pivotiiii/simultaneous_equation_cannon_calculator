@@ -1,4 +1,4 @@
-import cardImage from "../-assets/LEDE-EN080-664a92f0af.webp";
+import cardImage from "../-assets/LEDE-EN080-664a92f0af.webp?w=400&format=webp&imagetools";
 
 interface CardTextDialogComponentProps {
     showCardText: boolean;
