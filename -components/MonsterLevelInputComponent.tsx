@@ -1,3 +1,5 @@
+import {useId} from "react";
+
 interface MonsterLevelInputComponentProps {
     monsterLevelsInput: string;
     setMonsterLevelsInput: (val: string) => void;
@@ -31,19 +33,21 @@ export function MonsterLevelInputComponent(props: MonsterLevelInputComponentProp
         props.setInvalidInput(false);
     };
 
+    const descId = useId();
+
     return (
         <div>
             <input
                 type="text"
                 placeholder="Levels/Ranks of opponents monsters (comma separated)."
                 autoComplete="off"
-                aria-describedby="monster_levels_helper"
+                aria-describedby={descId}
                 value={props.monsterLevelsInput}
                 aria-invalid={props.invalidInput}
                 onInput={(e) => validateInput(e.currentTarget.value)}
                 onKeyUp={(e) => (e.key === "Enter" ? props.onEnter() : "")}
             />
-            <small id="monster_levels_helper">
+            <small id={descId}>
                 {props.invalidInput
                     ? props.monsterLevelsInput.length > 0
                         ? "Level/Rank cannot be smaller than 1."

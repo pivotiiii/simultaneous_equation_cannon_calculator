@@ -7,14 +7,12 @@ interface Combination {
 
 interface ResultsTableBodyComponentProps {
     combinations: Combination[];
-    combinationType: "valid" | "potential";
     showRelative?: boolean;
     totalCards?: number;
 }
 
 function ResultsTableBodyComponent({
     combinations,
-    combinationType,
     showRelative = false,
     totalCards = 0,
 }: ResultsTableBodyComponentProps) {
@@ -33,7 +31,6 @@ function ResultsTableBodyComponent({
             if (a.xyz > b.xyz) {
                 return 1;
             }
-            //return 0;
         }
         if (Math.abs(a.total_cards - totalCards) >= Math.abs(b.total_cards - totalCards)) {
             return 1;
@@ -95,10 +92,7 @@ export function ResultsTableComponent(props: ResultsTableComponentProps) {
                         ))}
                     </tr>
                 </thead>
-                <ResultsTableBodyComponent
-                    combinations={props.validCombinations}
-                    combinationType="valid"
-                />
+                <ResultsTableBodyComponent combinations={props.validCombinations} />
                 <ResultsTableSeparatorComponent
                     display={
                         props.validCombinations.length > 0 && props.potentialCombinations.length > 0
@@ -106,7 +100,6 @@ export function ResultsTableComponent(props: ResultsTableComponentProps) {
                 />
                 <ResultsTableBodyComponent
                     combinations={props.potentialCombinations}
-                    combinationType="potential"
                     totalCards={props.totalCards}
                     showRelative={props.showRelative}
                 />

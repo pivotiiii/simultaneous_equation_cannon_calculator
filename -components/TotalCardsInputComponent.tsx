@@ -1,3 +1,5 @@
+import {useId} from "react";
+
 interface TotalCardsInputComponentProps {
     totalCardsInput: string;
     setTotalCardsInput: (val: string) => void;
@@ -21,19 +23,21 @@ export function TotalCardsInputComponent(props: TotalCardsInputComponentProps) {
         }
     };
 
+    const descId = useId();
+
     return (
         <div>
             <input
                 type="text"
                 placeholder="Total cards on board and in hand."
                 autoComplete="off"
-                aria-describedby="total_cards_helper"
+                aria-describedby={descId}
                 value={props.totalCardsInput}
                 aria-invalid={props.invalidInput}
                 onInput={(e) => validateInput(e.currentTarget.value)}
                 onKeyUp={(e) => (e.key === "Enter" ? props.onEnter() : "")}
             />
-            <small id="total_cards_helper">
+            <small id={descId}>
                 {props.invalidInput
                     ? "Must be a number between " + minCards + " and " + maxCards + "."
                     : "Total cards on board and in hand."}
