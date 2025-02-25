@@ -5,18 +5,15 @@ import {ResultsTableComponent} from "./-components/ResultsTableComponent";
 import {MonsterLevelInputComponent} from "./-components/MonsterLevelInputComponent";
 import {TotalCardsInputComponent} from "./-components/TotalCardsInputComponent";
 
-const metaVars = [
-    {title: "Simultaneous Equation Cannons - Calculator"},
-    // prettier-ignore
-    {name: "description", content: "Calculate all possible combinations of extra deck monsters to activate the Yu-Gi-Oh! trap card Simultaneous Equation Cannons for a given game state.",},
-    // prettier-ignore
-    {name: "keywords", content: "pivotiiii, yugioh, Yu-Gi-Oh!, Simultaneous Equation Cannons, calculator, extra deck, monsters, combinations",},
-];
+const title = "Simultaneous Equation Cannons - Calculator";
+const description =
+    "Calculate all possible combinations of extra deck monsters to activate the Yu-Gi-Oh! trap card Simultaneous Equation Cannons for a given game state.";
 
 export const Route = createFileRoute("/simultaneous_equation_cannon_calculator/")({
     component: SECComponent,
     head: () => ({
-        meta: metaVars,
+        title: title,
+        meta: [{title: title}, {name: "description", content: description}],
     }),
 });
 
