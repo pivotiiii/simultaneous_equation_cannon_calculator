@@ -12,7 +12,7 @@ export function CardTextDialogComponent(props: CardTextDialogComponentProps) {
                 {/* <h2>Simultaneous Equation Cannons</h2> */}
                 <img
                     src={cardImage}
-                    alt="card image"
+                    alt="The Yu-Gi-Oh! trap card Simultaneous Equation Cannons."
                     style={{
                         borderRadius: "2%",
                         display: "block",

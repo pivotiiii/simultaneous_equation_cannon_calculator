@@ -1,4 +1,5 @@
 import {useId} from "react";
+import {useWindowDimensions} from "../../../common";
 
 interface MonsterLevelInputComponentProps {
     monsterLevelsInput: string;
@@ -33,13 +34,24 @@ export function MonsterLevelInputComponent(props: MonsterLevelInputComponentProp
         props.setInvalidInput(false);
     };
 
+    const {width} = useWindowDimensions();
+    const descriptionDefaultBig = "Levels/Ranks of opponents monsters (comma separated).";
+    const descriptionDefaultSmall = "Levels/Ranks of opponents monsters.";
+    const descriptionError = "Level/Rank cannot be smaller than 1.";
+    const placeholder = width > 700 ? descriptionDefaultBig : descriptionDefaultSmall;
+    const labelTextDefault = width > 700 ? descriptionDefaultSmall : descriptionDefaultBig;
+    const labelText = props.invalidInput
+        ? props.monsterLevelsInput.length > 0
+            ? descriptionError
+            : labelTextDefault
+        : labelTextDefault;
     const descId = useId();
 
     return (
         <div>
             <input
                 type="text"
-                placeholder="Levels/Ranks of opponents monsters (comma separated)."
+                placeholder={placeholder}
                 autoComplete="off"
                 aria-describedby={descId}
                 value={props.monsterLevelsInput}
@@ -47,13 +59,7 @@ export function MonsterLevelInputComponent(props: MonsterLevelInputComponentProp
                 onInput={(e) => validateInput(e.currentTarget.value)}
                 onKeyUp={(e) => (e.key === "Enter" ? props.onEnter() : "")}
             />
-            <small id={descId}>
-                {props.invalidInput
-                    ? props.monsterLevelsInput.length > 0
-                        ? "Level/Rank cannot be smaller than 1."
-                        : "Levels/Ranks of opponents monsters."
-                    : "Levels/Ranks of opponents monsters."}
-            </small>
+            <small id={descId}>{labelText}</small>
         </div>
     );
 }

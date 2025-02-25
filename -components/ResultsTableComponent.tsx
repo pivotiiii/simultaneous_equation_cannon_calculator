@@ -77,6 +77,8 @@ export function ResultsTableComponent(props: ResultsTableComponentProps) {
     const columns: string[] = ["Total Cards", "XYZ Rank", "Fusion Level", "Target Level"];
     // prettier-ignore
     const noResults: boolean = props.validCombinations.length === 0 && props.potentialCombinations.length === 0;
+    const displaySeparator =
+        props.validCombinations.length > 0 && props.potentialCombinations.length > 0;
     return (
         <article style={{display: props.showResults ? "" : "none"}}>
             <div style={{textAlign: "center", display: noResults ? "" : "none"}}>
@@ -85,19 +87,15 @@ export function ResultsTableComponent(props: ResultsTableComponentProps) {
             <table className="striped" style={{display: noResults ? "none" : ""}}>
                 <thead>
                     <tr>
-                        {columns.map((col) => (
-                            <th key={col} scope="col" style={{textAlign: "center"}}>
-                                {col}
+                        {columns.map((column) => (
+                            <th key={column} scope="col" style={{textAlign: "center"}}>
+                                {column}
                             </th>
                         ))}
                     </tr>
                 </thead>
                 <ResultsTableBodyComponent combinations={props.validCombinations} />
-                <ResultsTableSeparatorComponent
-                    display={
-                        props.validCombinations.length > 0 && props.potentialCombinations.length > 0
-                    }
-                />
+                <ResultsTableSeparatorComponent display={displaySeparator} />
                 <ResultsTableBodyComponent
                     combinations={props.potentialCombinations}
                     totalCards={props.totalCards}
