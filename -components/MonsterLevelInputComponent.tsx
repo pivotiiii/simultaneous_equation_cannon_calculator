@@ -34,7 +34,7 @@ export function MonsterLevelInputComponent(props: MonsterLevelInputComponentProp
         props.setInvalidInput(false);
     };
 
-    const {width} = useWindowDimensions();
+    const {width} = useWindowDimensions() as {width: number; height: number};
     const descriptionDefaultBig = "Levels/Ranks of opponents monsters (comma separated).";
     const descriptionDefaultSmall = "Levels/Ranks of opponents monsters.";
     const descriptionError = "Level/Rank cannot be smaller than 1.";

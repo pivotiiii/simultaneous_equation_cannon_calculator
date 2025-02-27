@@ -4,6 +4,7 @@ import {CardTextDialogComponent} from "./-components/CardTextDialogComponent";
 import {ResultsTableComponent} from "./-components/ResultsTableComponent";
 import {MonsterLevelInputComponent} from "./-components/MonsterLevelInputComponent";
 import {TotalCardsInputComponent} from "./-components/TotalCardsInputComponent";
+import {LevelsInputComponent} from "./-components/LevelsInputComponent";
 
 const urlRoute = "/simultaneous_equation_cannon_calculator/";
 const title = "Simultaneous Equation Cannons - Calculator";
@@ -80,6 +81,12 @@ function SECComponent() {
     const [validCombinations, setValidCombinations] = React.useState(new Array());
     const [potentialCombinations, setPotentialCombinations] = React.useState(new Array());
 
+    //const [extraDeck, setExtraDeck] = React.useState(0);
+    const [xyzRanks, setXyzRanks] = React.useState<number[]>([]);
+    const [fusionLevels, setFusionLevels] = React.useState<number[]>([]);
+
+    const extraDeck = 2 * xyzRanks.length + fusionLevels.length;
+
     const onCalculateClicked = () => {
         // prettier-ignore
         if (invalidTotalCardsInput || invalidMonsterLevelsInput || invalidTotalCardsInput === null ||  invalidMonsterLevelsInput  ===  null) {
@@ -100,8 +107,17 @@ function SECComponent() {
         setMonsterLevels(monsterLevels);
 
         const results = getAllCombinations(totalCardsValue, monsterLevelsValues);
-        setValidCombinations(results[0]);
-        setPotentialCombinations(results[1]);
+        const filterFunc = (c: Combination) => {
+            return (
+                (xyzRanks.length === 0 || xyzRanks.includes(c.xyz)) &&
+                (fusionLevels.length === 0 || fusionLevels.includes(c.fusion))
+            );
+        };
+        const validCombinations = results[0].filter((c) => filterFunc(c));
+        const potentialCombinations = results[1].filter((c) => filterFunc(c));
+
+        setValidCombinations(validCombinations);
+        setPotentialCombinations(potentialCombinations);
         setShowResults(true);
     };
 
@@ -125,6 +141,18 @@ function SECComponent() {
                     invalidInput={invalidMonsterLevelsInput}
                     setInvalidInput={setInvalidMonsterLevelsInput}
                     onEnter={onCalculateClicked}
+                />
+                <LevelsInputComponent
+                    description="Ranks of XYZ Monsters in your Extra Deck. (optional)"
+                    extraDeckCards={extraDeck}
+                    levels={xyzRanks}
+                    setLevels={setXyzRanks}
+                />
+                <LevelsInputComponent
+                    description="Levels of Fusion Monsters in your Extra Deck. (optional)"
+                    extraDeckCards={extraDeck}
+                    levels={fusionLevels}
+                    setLevels={setFusionLevels}
                 />
                 <input type="button" value="Calculate" onClick={onCalculateClicked} />
                 <div style={{display: "flex"}}>
