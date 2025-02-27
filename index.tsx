@@ -20,7 +20,7 @@ export const Route = createFileRoute(urlRoute)({
             {property: "og:title", content: title},
             // {property: "og:image", content: title},
             {property: "og:type", content: "website"},
-            {property: "og:url", content: __URL__ + urlRoute},
+            {property: "og:url", content: __URL__ + urlRoute.slice(0, -1)},
             {property: "og:site_name", content: "pivotiiii"},
             {property: "og:description", content: description},
             {name: "twitter:card", content: "summary"},
