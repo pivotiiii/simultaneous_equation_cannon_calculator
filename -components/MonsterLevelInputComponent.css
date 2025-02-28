@@ -1,0 +1,39 @@
+.add-monster-button-container {
+    --arrow-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(255, 255, 255)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    --button-dims: calc(
+        1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 +
+            var(--pico-border-width) * 2
+    );
+    --button-padding-left: 6px;
+    display: flex;
+    height: var(--button-dims);
+    width: var(--button-dims);
+    flex-direction: column;
+    padding-left: var(--button-padding-left);
+    justify-content: space-between;
+    align-content: stretch;
+    /* margin-left: 15px; */
+}
+
+.add-monster-button {
+    width: calc(var(--button-dims) - var(--button-padding-left));
+    /* width: 100%; */
+    padding-bottom: 8px;
+    height: 100%;
+    background-color: var(--pico-form-element-background-color);
+    border-color: var(--pico-form-element-border-color);
+}
+
+.add-monster-button:hover {
+    background-color: var(--pico-form-element-selected-background-color);
+}
+
+.add-monster-button:active {
+    background-color: var(--pico-form-element-active-background-color);
+}
+
+.add-monster-button:focus {
+    box-shadow:
+        var(--pico-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 var(--pico-outline-width) var(--pico-secondary-focus);
+}

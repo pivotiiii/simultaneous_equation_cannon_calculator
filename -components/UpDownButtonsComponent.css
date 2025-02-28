@@ -1,0 +1,60 @@
+.plus-minus-button-container {
+    --arrow-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(224 227 231)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    --button-dims: calc(
+        1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 +
+            var(--pico-border-width) * 2
+    );
+    --button-padding-left: 6px;
+    display: flex;
+    height: var(--button-dims);
+    width: var(--button-dims);
+    flex-direction: column;
+    margin-left: var(--button-padding-left);
+    justify-content: space-between;
+    align-content: stretch;
+}
+
+[data-theme="light"] .plus-minus-button-container {
+    --arrow-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(55 60 68)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+.plus-minus-button-container button {
+    width: calc(var(--button-dims) - var(--button-padding-left));
+    padding-bottom: 8px;
+    height: 45%;
+    background-color: var(--pico-form-element-background-color);
+    border-color: var(--pico-form-element-border-color);
+}
+
+.plus-minus-button-container button:hover {
+    background-color: var(--pico-form-element-selected-background-color);
+}
+
+.plus-minus-button-container button:active {
+    background-color: var(--pico-form-element-active-background-color);
+}
+
+.plus-minus-button-container button:focus {
+    box-shadow:
+        var(--pico-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 var(--pico-outline-width) var(--pico-secondary-focus);
+}
+
+.plus-minus-button-container button.plus-button::after,
+.plus-minus-button-container button.minus-button::after {
+    background-image: var(--arrow-icon);
+    background-position: right center;
+    background-size: 1rem auto;
+    content: "";
+    width: 1rem;
+    display: block;
+    height: 1rem;
+}
+
+.plus-minus-button-container button.plus-button::after {
+    transform: translateX(-0.18rem) translateY(-0.59rem) rotate(180deg);
+}
+
+.plus-minus-button-container button.minus-button::after {
+    transform: rotate(0deg) translateX(-0.2rem) translateY(-0.55rem);
+}

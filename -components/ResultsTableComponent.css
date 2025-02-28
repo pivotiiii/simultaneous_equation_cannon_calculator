@@ -1,0 +1,19 @@
+table.rounded-corners {
+    --corner-radius: var(--pico-border-radius);
+}
+
+table.rounded-corners tr th:first-of-type {
+    border-top-left-radius: var(--corner-radius);
+}
+
+table.rounded-corners tr:first-of-type th:last-of-type {
+    border-top-right-radius: var(--corner-radius);
+}
+
+table.rounded-corners tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: var(--corner-radius);
+}
+
+table.rounded-corners tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: var(--corner-radius);
+}
