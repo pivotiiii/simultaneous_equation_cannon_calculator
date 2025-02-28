@@ -32,13 +32,6 @@ export const Route = createFileRoute(urlRoute)({
     }),
 });
 
-interface Combination {
-    xyz: number;
-    fusion: number;
-    target: number;
-    total_cards: number;
-}
-
 function getCombination(level: number, totalCards: number): Combination | null {
     const req_xyz = totalCards - level;
     const req_fusion = level - req_xyz;

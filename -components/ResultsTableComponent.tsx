@@ -1,8 +1,10 @@
+declare global {
 interface Combination {
     xyz: number;
     fusion: number;
     target: number;
     total_cards: number;
+    }
 }
 
 interface ResultsTableBodyComponentProps {
