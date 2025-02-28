@@ -34,10 +34,7 @@ export function LevelsInputComponent(props: LevelsInputComponentProps) {
                         return (
                             <button
                                 key={"xyz_select_" + level}
-                                className={
-                                    "level-button" +
-                                    (props.levels.includes(level) ? " selected" : "")
-                                }
+                                className={"level-button" + (props.levels.includes(level) ? " selected" : "")}
                                 onClick={() => handleLevelSelect(level)}
                             >
                                 {level}
@@ -46,13 +43,10 @@ export function LevelsInputComponent(props: LevelsInputComponentProps) {
                     })}
                 </div>
                 <small>
-                    {props.description}
+                    <div className="level-button-description">{props.description}</div>
                     <a
                         className="reset-text"
-                        href="#"
-                        style={{
-                            display: displayReset ? "" : "none",
-                        }}
+                        style={{display: displayReset ? "" : "none"}}
                         onClick={handleReset}
                     >
                         reset

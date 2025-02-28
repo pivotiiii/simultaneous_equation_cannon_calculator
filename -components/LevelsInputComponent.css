@@ -30,18 +30,31 @@
         0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 770px) {
     .level-button {
         flex-basis: calc(100% / 7);
     }
 }
 
 .level-button:hover {
-    border-color: var(--pico-primary-focus);
+    /* border-color: var(--pico-primary-focus); */
+    background-color: var(--pico-form-element-selected-background-color);
+}
+
+.level-button:active {
+    background-color: var(--pico-form-element-active-background-color);
 }
 
 .level-button:focus:not(.selected) {
-    box-shadow: unset;
+    box-shadow:
+        var(--pico-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 var(--pico-outline-width) var(--pico-secondary-focus);
+}
+
+.level-button.selected:focus {
+    box-shadow:
+        var(--pico-button-hover-box-shadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 calc(var(--pico-outline-width) * 1.5) var(--pico-primary-focus);
 }
 
 .buttons-container + small {
@@ -55,4 +68,14 @@
     margin-left: auto;
     margin-right: 0px;
     padding-left: 15px;
+}
+
+.reset-text {
+    cursor: pointer;
+}
+
+@media (max-width: 416px) {
+    .level-button-description {
+        width: 270px;
+    }
 }
