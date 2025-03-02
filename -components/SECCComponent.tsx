@@ -1,10 +1,11 @@
-import {useState, useRef, useEffect, useCallback} from "react";
-import {CardTextDialogComponent} from "./CardTextDialogComponent";
+import {useState, useRef, useEffect, useCallback, lazy, Suspense} from "react";
 import {ResultsTableComponent} from "./ResultsTableComponent";
 import {MonsterLevelInputComponent} from "./MonsterLevelInputComponent";
 import {TotalCardsInputComponent} from "./TotalCardsInputComponent";
 import {LevelsInputComponent} from "./LevelsInputComponent";
 import {ToggleComponent} from "./ToggleComponent";
+
+const CardTextDialogComponent = lazy(() => import("./CardTextDialogComponent"));
 
 function getCombination(level: number, totalCards: number): Combination | null {
     const req_xyz = totalCards - level;
@@ -79,9 +80,6 @@ export function SECCComponent() {
         const results = getAllCombinations(totalCards, monsterLevels);
         validCombinations = results[0].filter((c) => filterFunc(c));
         potentialCombinations = results[1].filter((c) => filterFunc(c));
-        // if ((tableDiv.current?.offsetHeight || 0) > minTableHeight.current) {
-        //     minTableHeight.current = tableDiv.current?.offsetHeight || 0;
-        // }
     }
 
     const showTable = showResults && (validCombinations.length > 0 || potentialCombinations.length > 0);
@@ -125,36 +123,43 @@ export function SECCComponent() {
                     </div>
                 </div>
             </article>
-            <CardTextDialogComponent showCardText={showCardText} setShowCardText={setShowCardText} />
+            {showCardText && (
+                <Suspense fallback={<dialog open aria-busy></dialog>}>
+                    <CardTextDialogComponent setShowCardText={setShowCardText} />
+                </Suspense>
+            )}
+
             <div ref={tableDivRef} style={{minHeight: minTableHeight}}>
-                <article style={{display: showResults ? "" : "none"}}>
-                    <div style={{display: showTable ? "" : "none"}}>
-                        <ResultsTableComponent
-                            title="Possible combinations"
-                            error="No possible combinations for this game state."
-                            combinations={validCombinations}
-                        />
-                    </div>
-                    <div style={{display: showTable ? "" : "none"}}>
-                        <ResultsTableComponent
-                            title="Almost possible combinations"
-                            error="No almost possible combinations for this game state."
-                            combinations={potentialCombinations}
-                            showRelative={showRelativeValues}
-                            totalCards={totalCards}
-                        />
-                    </div>
-                    <h4
-                        style={{
-                            display:
-                                validCombinations.length > 0 || potentialCombinations.length > 0
-                                    ? "none"
-                                    : "",
-                        }}
-                    >
-                        No combinations for this game state.
-                    </h4>
-                </article>
+                {showResults && (
+                    <article>
+                        {showTable ? (
+                            <>
+                                {validCombinations.length > 0 ? (
+                                    <>
+                                        <h4>Possible combinations</h4>
+                                        <ResultsTableComponent combinations={validCombinations} />
+                                    </>
+                                ) : (
+                                    <h4>No possible combinations for this game state.</h4>
+                                )}
+                                {potentialCombinations.length > 0 ? (
+                                    <>
+                                        <h4>Almost possible combinations</h4>
+                                        <ResultsTableComponent
+                                            combinations={potentialCombinations}
+                                            showRelative={showRelativeValues}
+                                            totalCards={totalCards}
+                                        />
+                                    </>
+                                ) : (
+                                    <h4>No almost possible combinations for this game state.</h4>
+                                )}
+                            </>
+                        ) : (
+                            <h4>No possible or almost possible combinations for this game state.</h4>
+                        )}
+                    </article>
+                )}
             </div>
         </>
     );

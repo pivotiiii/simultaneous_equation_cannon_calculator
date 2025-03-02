@@ -44,13 +44,11 @@ export function LevelsInputComponent(props: LevelsInputComponentProps) {
                 </div>
                 <small>
                     <div className="level-button-description">{props.description}</div>
-                    <a
-                        className="reset-text"
-                        style={{display: displayReset ? "" : "none"}}
-                        onClick={handleReset}
-                    >
-                        reset
-                    </a>
+                    {displayReset && (
+                        <a className="reset-text" onClick={handleReset}>
+                            reset
+                        </a>
+                    )}
                 </small>
             </div>
         </>

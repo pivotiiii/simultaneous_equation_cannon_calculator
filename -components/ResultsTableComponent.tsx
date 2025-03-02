@@ -84,8 +84,6 @@ function ResultsTableSeparatorComponent(props: ResultsTableSeparatorComponentPro
 
 interface ResultsTableComponentProps {
     combinations: Combination[];
-    title: string;
-    error: string;
     /** only needed for potential combinations */
     totalCards?: number;
     /** only needed for potential combinations */
@@ -95,31 +93,24 @@ interface ResultsTableComponentProps {
 const columns: string[] = ["Total Cards", "XYZ Rank", "Fusion Level", "Target Level"];
 
 export function ResultsTableComponent(props: ResultsTableComponentProps) {
-    const noResults: boolean = props.combinations.length === 0;
     return (
         <>
-            <div style={{textAlign: "left", display: noResults ? "" : "none"}}>
-                <h4>{props.error}</h4>
-            </div>
-            <div style={{display: noResults ? "none" : ""}}>
-                <h4>{props.title}</h4>
-                <table className="striped rounded-corners">
-                    <thead>
-                        <tr>
-                            {columns.map((column) => (
-                                <th key={column} scope="col" style={{textAlign: "center"}}>
-                                    {column}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <ResultsTableBodyComponent
-                        combinations={props.combinations}
-                        totalCards={props.totalCards}
-                        showRelative={props.showRelative}
-                    />
-                </table>
-            </div>
+            <table className="striped rounded-corners">
+                <thead>
+                    <tr>
+                        {columns.map((column) => (
+                            <th key={column} scope="col" style={{textAlign: "center"}}>
+                                {column}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <ResultsTableBodyComponent
+                    combinations={props.combinations}
+                    totalCards={props.totalCards}
+                    showRelative={props.showRelative}
+                />
+            </table>
         </>
     );
 }

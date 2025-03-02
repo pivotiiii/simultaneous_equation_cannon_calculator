@@ -1,18 +1,19 @@
-import cardImage from "../-assets/LEDE-EN080-664a92f0af.webp?w=400&format=webp&imagetools";
+import cardImageMeta from "../-assets/LEDE-EN080-664a92f0af.webp?w=400&format=webp&as=metadata&imagetools";
 
 interface CardTextDialogComponentProps {
-    showCardText: boolean;
-    setShowCardText: (val: boolean) => void;
+    setShowCardText: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function CardTextDialogComponent(props: CardTextDialogComponentProps) {
+export default function CardTextDialogComponent(props: CardTextDialogComponentProps) {
     return (
-        <dialog open={props.showCardText ? true : false}>
+        <dialog open>
             <article>
                 {/* <h2>Simultaneous Equation Cannons</h2> */}
                 <img
-                    src={cardImage}
+                    src={cardImageMeta.src}
                     alt="The Yu-Gi-Oh! trap card Simultaneous Equation Cannons."
+                    width={cardImageMeta.width}
+                    height={cardImageMeta.height}
                     style={{
                         borderRadius: "2%",
                         display: "block",
@@ -24,12 +25,12 @@ export function CardTextDialogComponent(props: CardTextDialogComponentProps) {
                     }}
                 />
                 <p style={{marginTop: "3%"}}>
-                    Banish 1 Fusion Monster and 2 Xyz Monsters with the same Rank from your Extra
-                    Deck, whose combined Level and Ranks equal the total number of cards in both
-                    players' hands and on the field, then you can apply this effect.
-                    <br />● Return 2 of your banished monsters to the Extra Deck (1 Xyz and 1
-                    Fusion) whose combined Level and Rank equal the Level or Rank of 1 face-up
-                    monster your opponent controls, then banish all cards they control.
+                    Banish 1 Fusion Monster and 2 Xyz Monsters with the same Rank from your Extra Deck, whose
+                    combined Level and Ranks equal the total number of cards in both players' hands and on the
+                    field, then you can apply this effect.
+                    <br />● Return 2 of your banished monsters to the Extra Deck (1 Xyz and 1 Fusion) whose
+                    combined Level and Rank equal the Level or Rank of 1 face-up monster your opponent
+                    controls, then banish all cards they control.
                 </p>
                 <footer>
                     <a
