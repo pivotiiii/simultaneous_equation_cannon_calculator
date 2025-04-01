@@ -25,6 +25,7 @@ export const Route = createFileRoute(urlRoute)({
             {name: "twitter:description", content: description},
             {name: "twitter:image", content: og_image},
         ],
+        links: [{rel: "canonical", href: __URL__ + urlRoute.slice(0, -1)}],
     }),
 });
 
