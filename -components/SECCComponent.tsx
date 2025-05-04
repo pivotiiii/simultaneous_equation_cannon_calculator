@@ -16,7 +16,7 @@ function getCombination(level: number, totalCards: number): Combination | null {
     return null;
 }
 
-function getAllCombinations(totalCards: number, monsterLevels: Set<number>): Combination[][] {
+function getAllCombinations(totalCards: number, monsterLevels: number[]): Combination[][] {
     const validCombinations = new Array();
     const potentialCombinations = new Array();
     for (const level of monsterLevels) {
@@ -42,7 +42,8 @@ export function SECCComponent() {
     const [minTableHeight, setMinTableHeight] = useState(0);
 
     const [totalCards, setTotalCards] = useState(0);
-    const [monsterLevels, setMonsterLevels] = useState<Set<number>>(new Set());
+    const [invalidTotalCardsInput, setInvalidTotalCardsInput] = useState(null as unknown as boolean);
+    const [monsterLevels, setMonsterLevels] = useState<number[]>([]);
     const [xyzRanks, setXyzRanks] = useState<number[]>([]);
     const [fusionLevels, setFusionLevels] = useState<number[]>([]);
 
@@ -58,10 +59,16 @@ export function SECCComponent() {
 
     const onCalculateClicked = useCallback(() => {
         if (showResults === false) {
-            setTimeout(() => tableDivRef.current?.scrollIntoView({behavior: "smooth", block: "end"}), 50);
+            if (invalidTotalCardsInput === false && monsterLevels.length > 0) {
+                setTimeout(() => tableDivRef.current?.scrollIntoView({behavior: "smooth", block: "end"}), 50);
+                setShowResults(true);
+            } else {
+                if (monsterLevels.length > 0) {
+                    setInvalidTotalCardsInput(true);
+                }
+            }
         }
-        setShowResults(true);
-    }, [showResults]);
+    }, [showResults, invalidTotalCardsInput, monsterLevels]);
 
     const filterFunc = useCallback(
         (c: Combination) => {
@@ -88,10 +95,17 @@ export function SECCComponent() {
         <>
             <article>
                 <h4>Board State</h4>
-                <TotalCardsInputComponent setTotalCards={setTotalCards} onEnter={onCalculateClicked} />
-                <MonsterLevelInputComponent
-                    setMonsterLevels={setMonsterLevels}
+                <TotalCardsInputComponent
+                    setTotalCards={setTotalCards}
                     onEnter={onCalculateClicked}
+                    invalidTotalCardsInput={invalidTotalCardsInput}
+                    setInvalidTotalCardsInput={setInvalidTotalCardsInput}
+                />
+                <LevelsInputComponent
+                    description="Levels/Ranks of opponents monsters." // (optional)"
+                    extraDeckCards={-1}
+                    levels={monsterLevels}
+                    setLevels={setMonsterLevels}
                 />
                 <h4>Extra Deck (optional)</h4>
                 <LevelsInputComponent

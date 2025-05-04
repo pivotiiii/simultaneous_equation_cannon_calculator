@@ -4,6 +4,8 @@ import {UpDownButtonsComponent} from "./UpDownButtonsComponent";
 interface TotalCardsInputComponentProps {
     setTotalCards: React.Dispatch<React.SetStateAction<number>>;
     onEnter: Function;
+    invalidTotalCardsInput: boolean;
+    setInvalidTotalCardsInput: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const minCards = 1; //needs 1 target on field, trap could be rollbacked
@@ -13,7 +15,6 @@ const descriptionError = "Must be a number between " + minCards + " and " + maxC
 
 export function TotalCardsInputComponent(props: TotalCardsInputComponentProps) {
     const [totalCardsInput, setTotalCardsInput] = useState("");
-    const [invalidTotalCardsInput, setInvalidTotalCardsInput] = useState(null as unknown as boolean);
     const descId = useId();
 
     const validateInput = useCallback((input: string) => {
@@ -21,9 +22,9 @@ export function TotalCardsInputComponent(props: TotalCardsInputComponentProps) {
         setTotalCardsInput(cleanInput);
         const val: number = parseInt(cleanInput);
         if (val < minCards || val > maxCards || cleanInput.length === 0) {
-            setInvalidTotalCardsInput(true);
+            props.setInvalidTotalCardsInput(true);
         } else {
-            setInvalidTotalCardsInput(false);
+            props.setInvalidTotalCardsInput(false);
             props.setTotalCards(val);
         }
     }, []);
@@ -37,7 +38,7 @@ export function TotalCardsInputComponent(props: TotalCardsInputComponentProps) {
                     autoComplete="off"
                     aria-describedby={descId}
                     value={totalCardsInput}
-                    aria-invalid={invalidTotalCardsInput}
+                    aria-invalid={props.invalidTotalCardsInput}
                     onInput={(e) => validateInput(e.currentTarget.value)}
                     onKeyUp={(e) => (e.key === "Enter" ? props.onEnter() : "")}
                 />
@@ -45,7 +46,7 @@ export function TotalCardsInputComponent(props: TotalCardsInputComponentProps) {
             </div>
             {/*so small has correct style*/}
             <input style={{display: "none"}}></input>
-            <small id={descId}>{invalidTotalCardsInput ? descriptionError : descriptionDefault}</small>
+            <small id={descId}>{props.invalidTotalCardsInput ? descriptionError : descriptionDefault}</small>
         </div>
     );
 }
